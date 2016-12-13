@@ -1,6 +1,61 @@
-function TableModel() {
+ko.components.register('m-table', {
+    viewModel: function(params) {
+        var self = this;
+        //前台数据
+        self.memberTable = ko.observableArray([]);
+        //读取数据
+        self.loadTableInfo = function() {
+            $.each(params.showInfoModel.memberArray(), function(index, value) {
+                self.memberTable.push(new MemberModel(value))
+            });
+        }
+        self.loadTableInfo();
+        function MemberModel(data) {
+            var self = this;
+            self.id = ko.observable(data.Id);
+            self.superId = ko.observable(data.superId);
+            self.name = ko.observable(data.name);
+            self.remarks = ko.observable(data.remarks);
+        }
+
+
+    },
+    template: '<table class="table table-striped">\
+        <thead>\
+            <tr>\
+                <th>\
+                    名称\
+                </th>\
+                <th>\
+                    编号\
+                </th>\
+                <th>\
+                    上级编号\
+                </th>\
+                <th>\
+                    备注\
+                </th>\
+            </tr>\
+        </thead>\
+        <tbody data-bind="foreach:memberTable">\
+            <tr>\
+                <td data-bind="text:name"></td>\
+                <td data-bind="text:id"></td>\
+                <td data-bind="text:superId"></td>\
+                <td data-bind="text:remarks"></td>\
+            </tr>\
+        </tbody>\
+    </table>'
+});
+
+//传入数据模型
+var momo = new showInfoModel();
+
+function showInfoModel() {
     var self = this;
-    //后台模拟数据
+    self.url = 'showTable';
+    self.pageIndex = 0;
+    self.pageNum = 5;
     self.memberArray = ko.observableArray([
         {
             "Id": 1,
@@ -45,23 +100,5 @@ function TableModel() {
             "remarks": null
         }
     ]);
-    //前台数据
-    self.memberTable = ko.observableArray([]);
-    //读取数据
-    self.loadTableInfo = function () {
-        $.each(self.memberArray(), function (index, value) {
-            self.memberTable.push(new MemberModel(value))
-        });
-    }
-    self.loadTableInfo();
 }
-//成员模型
-function MemberModel(data) {
-    var self = this;
-    self.id = ko.observable(data.Id);
-    self.superId = ko.observable(data.superId);
-    self.name = ko.observable(data.name);
-    self.remarks = ko.observable(data.remarks);
-}
-
-ko.applyBindings(new TableModel());
+ ko.applyBindings();
