@@ -3,13 +3,23 @@ ko.components.register('m-table', {
         var self = this;
         //前台数据
         self.memberTable = ko.observableArray([]);
+        self.column = ko.observableArray([]);
         //读取数据
         self.loadTableInfo = function() {
-            $.each(params.showInfoModel.memberArray(), function(index, value) {
+            $.each(params.postdata.title, function(i, v) {
+                
+                self.column.push(new columnModel(v));
+            });
+            $.each(params.postdata.memlist, function(index, value) {
                 self.memberTable.push(new MemberModel(value))
             });
         }
         self.loadTableInfo();
+        function columnModel(data) {
+            var self = this;
+            self.text = ko.observable(data.text);
+            self.fieldName = ko.observable(data.fieldname);
+        }
         function MemberModel(data) {
             var self = this;
             self.id = ko.observable(data.Id);
@@ -22,18 +32,8 @@ ko.components.register('m-table', {
     },
     template: '<table class="table table-striped">\
         <thead>\
-            <tr>\
-                <th>\
-                    名称\
-                </th>\
-                <th>\
-                    编号\
-                </th>\
-                <th>\
-                    上级编号\
-                </th>\
-                <th>\
-                    备注\
+            <tr data-bind="foreach:column">\
+                <th data-bind="text:text">\
                 </th>\
             </tr>\
         </thead>\
@@ -49,6 +49,73 @@ ko.components.register('m-table', {
 });
 
 //传入数据模型
+var postdata = {
+    "title": [{
+        text: "姓名",
+        fieldname: "name"
+    }, {
+        text: "编号",
+        fieldname: "Id"
+    }, {
+        text: "上级编号",
+        fieldname: "superId"
+    }, {
+        text: "备注",
+        fieldname: "remarks"
+    }],
+    "pageIndex": 0,
+    "pageSize": 5,
+    "pageNum": 7,
+    "memlist": [
+        {
+            "Id": 1,
+            "superId": 0,
+            "name": "校长",
+            "remarks": null
+        },
+        {
+            "Id": 2,
+            "superId": 1,
+            "name": "副校长",
+            "remarks": null
+        },
+        {
+            "Id": 3,
+            "superId": 1,
+            "name": "政教处主任",
+            "remarks": null
+        },
+        {
+            "Id": 4,
+            "superId": 3,
+            "name": "政教处副主任",
+            "remarks": null
+        },
+        {
+            "Id": 5,
+            "superId": 1,
+            "name": "年级主任",
+            "remarks": null
+        },
+        {
+            "Id": 6,
+            "superId": 5,
+            "name": "授课教师",
+            "remarks": null
+        },
+        {
+            "Id": 7,
+            "superId": 6,
+            "name": "学生",
+            "remarks": null
+        }
+    ]
+}
+
+
+
+
+/*
 var momo = new showInfoModel();
 
 function showInfoModel() {
@@ -101,4 +168,7 @@ function showInfoModel() {
         }
     ]);
 }
- ko.applyBindings();
+*/
+
+
+ko.applyBindings();
