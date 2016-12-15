@@ -1,24 +1,28 @@
 ko.components.register('m-table', {
-    viewModel: function(params) {
+    viewModel: function (params) {
         var self = this;
         //前台数据
         self.memberTable = ko.observableArray([]);
         self.column = ko.observableArray([]);
+        self.memlist = ko.observableArray([]);
         //读取数据
-        self.loadTableInfo = function() {
-            $.each(params.postdata.title, function(i, v) {
-                
-                self.column.push(new columnModel(v));
+        self.loadTableInfo = function () {
+            $.each(params.postdata.title, function (i, v) {
+                self.column.push(new ColumnModel(v));
             });
-            $.each(params.postdata.memlist, function(index, value) {
-                self.memberTable.push(new MemberModel(value))
+            self.memlist(params.postdata.memlist)
+            $.each(params.postdata.memlist, function (index, value) {
+                self.memberTable.push(new MemberModel(value));
             });
         }
         self.loadTableInfo();
-        function columnModel(data) {
+        function ColumnModel(data) {
             var self = this;
             self.text = ko.observable(data.text);
             self.fieldName = ko.observable(data.fieldname);
+        }
+        function MemberViewModel(data) {
+            var self = this;
         }
         function MemberModel(data) {
             var self = this;
