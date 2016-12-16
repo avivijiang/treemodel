@@ -2,15 +2,23 @@ ko.components.register('m-table', {
     viewModel: function (params) {
         var self = this;
         //前台数据
+        //数据模型数组
         self.memberTable = ko.observableArray([]);
-        self.column = ko.observableArray([]);
-        self.contentList = ko.observableArray([]);
-        self.memList = ko.observableArray([]);
+        //标题数组
+        self.column = [];
+        //数组处理1
+        self.memList = [];
+        //数组处理寄存器
+        self.contentList = [];
+        self.listA = [];
+        self.listB = [];
         //读取数据
         self.loadTableInfo = function () {
+            //封装标题栏
             $.each(params.postdata.title, function (i, v) {
                 self.column.push(new ColumnModel(v));
             });
+            //开始处理内容
             $.each(params.postdata.memlist, function (index, value) {
                 $.each(value, function (i, v) {
                     self.contentList.push(new Content(i, v))
@@ -20,13 +28,25 @@ ko.components.register('m-table', {
                 self.memberTable.push(new MemberModel(value));
 
             });
-            console.log(self.memList());
+            //循环建立数组
+            for (var j = 0; j < self.memList.length; j++) {
+                for (var i = 0; i < self.column.length; i++) {
+                    for (var k = 0; k < self.memList[j].length; k++) {
+                        if (self.column[i].fieldName == self.memList[j][k].fieldName) {
+                            self.listA.push(self.memList[j][k].value);
+                        }
+                    }
+                }
+                self.listB.push(new MemModel(self.listA));
+                self.listA = [];
+            }
+            console.log(self.listB);
         }
         self.loadTableInfo();
         function ColumnModel(data) {
             var self = this;
-            self.text = ko.observable(data.text);
-            self.fieldName = ko.observable(data.fieldname);
+            self.text = data.text;
+            self.fieldName = data.fieldname;
         }
         function MemModel(a) {
             return a;
@@ -53,12 +73,9 @@ ko.components.register('m-table', {
                 </th>\
             </tr>\
         </thead>\
-        <tbody data-bind="foreach:memberTable">\
-            <tr>\
-                <td data-bind="text:name"></td>\
-                <td data-bind="text:id"></td>\
-                <td data-bind="text:superId"></td>\
-                <td data-bind="text:remarks"></td>\
+        <tbody data-bind="foreach:listB">\
+            <tr data-bind="foreach:$data">\
+                <td data-bind="text:$data"></td>\
             </tr>\
         </tbody>\
     </table>'
