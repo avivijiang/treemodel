@@ -3,7 +3,7 @@ ko.components.register('m-table', {
         var self = this;
         //前台数据
         //数据模型数组
-        self.memberTable = ko.observableArray([]);
+        // self.memberTable = ko.observableArray([]);
         //标题数组
         self.column = [];
         //数组处理1
@@ -12,8 +12,34 @@ ko.components.register('m-table', {
         self.contentList = [];
         self.listA = [];
         self.listB = [];
+        //显示数组
+        self.showList = [];
+        //翻页信息
+        self.pageIndex = ko.observable(0);
+        self.pageSize = ko.observable();
+        self.pageNum = ko.observable();
+        self.goPage = ko.observable(1);
+        //分页方法
+        self.lastPage = function () {
+            self.pageIndex(self.pageIndex()--);
+            self.loadTableInfo(self.pageIndex());
+        }
+        self.nextPage = function () {
+            self.pageIndex(self.pageIndex()++);
+            self.loadTableInfo(self.pageIndex());
+        }
+        self.turnToPage = function () {
+            self.pageIndex(self.goPage() - 1);
+            self.loadTableInfo(self.pageIndex());
+        }
+
+
         //读取数据
-        self.loadTableInfo = function () {
+        self.loadTableInfo = function (pageI) {
+            self.listB = [];
+            self.pageIndex(params.postdata.pageIndex);
+            self.pageSize(params.postdata.pageSize);
+            self.pageNum(Math.ceil((params.postdata.pageNum)/self.pageSize()));
             //封装标题栏
             $.each(params.postdata.title, function (i, v) {
                 self.column.push(new ColumnModel(v));
@@ -25,7 +51,7 @@ ko.components.register('m-table', {
                 })
                 self.memList.push(new MemModel(self.contentList));
                 self.contentList = [];
-                self.memberTable.push(new MemberModel(value));
+                // self.memberTable.push(new MemberModel(value));
 
             });
             //循环建立数组
@@ -34,13 +60,14 @@ ko.components.register('m-table', {
                     for (var k = 0; k < self.memList[j].length; k++) {
                         if (self.column[i].fieldName == self.memList[j][k].fieldName) {
                             self.listA.push(self.memList[j][k].value);
+                            break;
                         }
                     }
                 }
                 self.listB.push(new MemModel(self.listA));
                 self.listA = [];
             }
-            console.log(self.listB);
+
         }
         self.loadTableInfo();
         function ColumnModel(data) {
@@ -56,17 +83,17 @@ ko.components.register('m-table', {
             self.fieldName = a;
             self.value = b;
         }
-        function MemberModel(data) {
-            var self = this;
-            self.id = ko.observable(data.Id);
-            self.superId = ko.observable(data.superId);
-            self.name = ko.observable(data.name);
-            self.remarks = ko.observable(data.remarks);
-        }
+        // function MemberModel(data) {
+        //     var self = this;
+        //     self.id = ko.observable(data.Id);
+        //     self.superId = ko.observable(data.superId);
+        //     self.name = ko.observable(data.name);
+        //     self.remarks = ko.observable(data.remarks);
+        // }
 
 
     },
-    template: '<table class="table table-striped">\
+    template: '<table style="border:1px #dee1e2 solid;" class="table table-striped">\
         <thead>\
             <tr data-bind="foreach:column">\
                 <th data-bind="text:text">\
@@ -78,22 +105,27 @@ ko.components.register('m-table', {
                 <td data-bind="text:$data"></td>\
             </tr>\
         </tbody>\
-    </table>'
+    </table>\
+    <button class="btn btn-info btn-sm" data-bind="click:lastPage,disable:pageIndex()==0"><</button>\
+    <button class="btn btn-info btn-sm" data-bind="click:nextPage,enable:pageIndex()<pageNum()">></button>\
+    <span style="padding-left:20px"><button class="btn btn-info" style="width:40px;height:28px;padding:0 0 0 1px;" data-bind="click:turnToPage,disable:(goPage()==null||goPage()>(pageNum()+1)||goPage()<1)">跳到</button>\
+        <input class="form-control" style="display:inline;width:50px;height:30px;" data-bind="textInput:goPage">页</span>\
+        <span style="padding-left:20px">共<span data-bind="text:pageNum()"></span>页</span>'
 });
 
 //传入数据模型
 var postdata = {
-    "title": [{
-        text: "姓名",
+            "title": [{
+            text: "姓名",
         fieldname: "name"
     }, {
-        text: "编号",
+            text: "编号",
         fieldname: "Id"
     }, {
-        text: "上级编号",
+            text: "上级编号",
         fieldname: "superId"
     }, {
-        text: "备注",
+            text: "备注",
         fieldname: "remarks"
     }],
     "pageIndex": 0,
