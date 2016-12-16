@@ -19,6 +19,7 @@ ko.components.register('m-table', {
         self.pageSize = ko.observable();
         self.pageNum = ko.observable();
         self.goPage = ko.observable(1);
+        self.firstPage = ko.observable(0);
         //分页方法
         self.lastPage = function () {
             self.pageIndex(self.pageIndex()--);
@@ -39,7 +40,8 @@ ko.components.register('m-table', {
             self.listB = [];
             self.pageIndex(params.postdata.pageIndex);
             self.pageSize(params.postdata.pageSize);
-            self.pageNum(Math.ceil((params.postdata.pageNum)/self.pageSize()));
+            self.pageNum(Math.ceil((params.postdata.pageNum) / self.pageSize()));
+
             //封装标题栏
             $.each(params.postdata.title, function (i, v) {
                 self.column.push(new ColumnModel(v));
@@ -115,17 +117,17 @@ ko.components.register('m-table', {
 
 //传入数据模型
 var postdata = {
-            "title": [{
-            text: "姓名",
+    "title": [{
+        text: "姓名",
         fieldname: "name"
     }, {
-            text: "编号",
+        text: "编号",
         fieldname: "Id"
     }, {
-            text: "上级编号",
+        text: "上级编号",
         fieldname: "superId"
     }, {
-            text: "备注",
+        text: "备注",
         fieldname: "remarks"
     }],
     "pageIndex": 0,
