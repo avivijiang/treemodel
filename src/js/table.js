@@ -20,6 +20,7 @@ ko.components.register('m-table', {
         self.pageNum = ko.observable();
         self.goPage = ko.observable(1);
         self.firstPage = ko.observable(0);
+        self.selectPage = ko.observableArray([]);
         //分页方法
         self.lastPage = function () {
             self.pageIndex(self.pageIndex()--);
@@ -34,14 +35,21 @@ ko.components.register('m-table', {
             self.loadTableInfo(self.pageIndex());
         }
 
-
         //读取数据
         self.loadTableInfo = function (pageI) {
+            self.selectPage([]);
             self.listB = [];
             self.pageIndex(params.postdata.pageIndex);
             self.pageSize(params.postdata.pageSize);
             self.pageNum(Math.ceil((params.postdata.pageNum) / self.pageSize()));
-
+            var ax = self.pageIndex() - 1;
+            if (ax <= 0) {
+                ax = 1;
+            }
+            for (var i = 0; i < 5; i++) {
+                self.selectPage.push(ax);
+                ax++;
+            }
             //封装标题栏
             $.each(params.postdata.title, function (i, v) {
                 self.column.push(new ColumnModel(v));
@@ -72,6 +80,7 @@ ko.components.register('m-table', {
 
         }
         self.loadTableInfo();
+
         function ColumnModel(data) {
             var self = this;
             self.text = data.text;
@@ -95,24 +104,8 @@ ko.components.register('m-table', {
 
 
     },
-    template: '<table style="border:1px #dee1e2 solid;" class="table table-striped">\
-        <thead>\
-            <tr data-bind="foreach:column">\
-                <th data-bind="text:text">\
-                </th>\
-            </tr>\
-        </thead>\
-        <tbody data-bind="foreach:listB">\
-            <tr data-bind="foreach:$data">\
-                <td data-bind="text:$data"></td>\
-            </tr>\
-        </tbody>\
-    </table>\
-    <button class="btn btn-info btn-sm" data-bind="click:lastPage,disable:pageIndex()==0"><</button>\
-    <button class="btn btn-info btn-sm" data-bind="click:nextPage,enable:pageIndex()<pageNum()">></button>\
-    <span style="padding-left:20px"><button class="btn btn-info" style="width:40px;height:28px;padding:0 0 0 1px;" data-bind="click:turnToPage,disable:(goPage()==null||goPage()>(pageNum()+1)||goPage()<1)">跳到</button>\
-        <input class="form-control" style="display:inline;width:50px;height:30px;" data-bind="textInput:goPage">页</span>\
-        <span style="padding-left:20px">共<span data-bind="text:pageNum()"></span>页</span>'
+    template: require('text!template/table.html') 
+
 });
 
 //传入数据模型
@@ -130,9 +123,9 @@ var postdata = {
         text: "备注",
         fieldname: "remarks"
     }],
-    "pageIndex": 0,
+    "pageIndex": 5,
     "pageSize": 5,
-    "pageNum": 7,
+    "pageNum": 100,
     "memlist": [
         {
             "Id": 1,
