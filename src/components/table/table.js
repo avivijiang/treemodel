@@ -58,11 +58,11 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
             self.pageIndex(data.pageIndex);
             self.pageSize(data.pageSize);
             self.pageNum(Math.ceil((data.pageNum) / self.pageSize()));
-            var ax = self.pageIndex() - 1;
+            var ax = self.pageIndex() - 3;
             if (ax <= 0) {
                 ax = 1;
             }
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < 9; i++) {
                 self.selectPage.push(ax);
                 ax++;
             }
@@ -86,13 +86,11 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
                     for (var k = 0; k < self.memList[j].length; k++) {
                         if (self.column()[i].fieldName == self.memList[j][k].fieldName) {
                             self.listA.push(self.memList[j][k].value);
-                            debugger;
                             break;
                         }
                     }
                 }
                 self.listB.push(new MemModel(self.listA));
-                debugger;
                 self.listA = [];
             }
 
