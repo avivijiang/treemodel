@@ -20,6 +20,7 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
         self.pageIndex = ko.observable(0);
         self.pageSize = ko.observable();
         self.pageNum = ko.observable();
+        self.memNum = ko.observable();
         self.goPage = ko.observable(1);
         self.firstPage = ko.observable(0);
         self.selectPage = ko.observableArray([]);
@@ -57,6 +58,7 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
             self.listB([]);
             self.pageIndex(data.pageIndex);
             self.pageSize(data.pageSize);
+            self.memNum(data.pageNum);
             self.pageNum(Math.ceil((data.pageNum) / self.pageSize()));
             var ax = self.pageIndex() - 3;
             if (ax <= 0) {
@@ -81,7 +83,7 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
 
             });
             //循环建立数组
-            for (var j = 0; j < self.memList.length; j++) {
+            for (var j = 0; j < self.pageSize(); j++) {
                 for (var i = 0; i < self.column().length; i++) {
                     for (var k = 0; k < self.memList[j].length; k++) {
                         if (self.column()[i].fieldName == self.memList[j][k].fieldName) {
