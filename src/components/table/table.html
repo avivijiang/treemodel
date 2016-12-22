@@ -1,7 +1,14 @@
 <table style="border:1px #dee1e2 solid;" class="table table-striped">
     <thead>
         <tr data-bind="foreach:column">
-            <th data-bind="text:text">
+            <th>
+                <!-- ko text:$index -->
+                <!-- /ko -->
+                <!-- ko text:text -->
+                <!-- /ko -->
+                <button data-bind="click:$parent.sort">
+                <span class="glyphicon" data-bind="css:{'glyphicon-sort':sortUp()===0,'glyphicon-sort-by-attributes':sortUp()===true,'glyphicon-sort-by-attributes-alt':sortUp()===false}"></span>
+                </button>
             </th>
         </tr>
     </thead>
@@ -28,14 +35,15 @@
     
     </div>
     <div style="float:right">
-<button class="btn btn-info btn-sm" data-bind="click:lastPage,disable:pageIndex()==0"><
+<button class="btn btn-info btn-sm" data-bind="click:lastPage,disable:pageIndex()==0">previous
 </button>
 <!-- ko foreach:selectPage -->
 <button class="btn btn-sm" data-bind="css:{'btn-success':$data == $parent.pageIndex()+1,'btn-info':$data != $parent.pageIndex()+1},text:$data,visible:$data>0&&$data<=$parent.pageNum(),disable:$data == $parent.pageIndex()+1"></button>
 <!-- /ko -->
-<button class="btn btn-info btn-sm" data-bind="click:nextPage,enable:pageIndex()<pageNum()">></button>
+<button class="btn btn-info btn-sm" data-bind="click:nextPage,enable:pageIndex()<pageNum()">next</button>
 <!--span style="padding-left:20px"><button class="btn btn-info" style="width:40px;height:28px;padding:0 0 0 1px;" data-bind="click:turnToPage,disable:(goPage()==null||goPage()>(pageNum()+1)||goPage()<1)">跳到</button>
         <input class="form-control" style="display:inline;width:50px;height:30px;" data-bind="textInput:goPage">页</span>
 <span style="padding-left:20px">共<span data-bind="text:pageNum()"></span>页</span-->
 </div>
+<button class="btn btn-success btn-sm" data-bind="click:empty">empty</button>
 </label>

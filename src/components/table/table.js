@@ -37,6 +37,39 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
             self.pageIndex(self.goPage() - 1);
             self.loadTableInfo(self.pageIndex());
         }
+        //排序算法
+        self.sort = function (index) {
+            var q;
+            for (var i = 0; i < self.column().length; i++) {
+                if (self.column()[i].fieldName == index.fieldName) {
+                    q = i;
+                }
+            }
+            self.listA = self.listB();
+            if (self.column()[q].sortUp() == false) {
+                self.listA.sort(function (a, b) {
+                    return a[q] - b[q];
+                });
+                for (var i = 0; i < self.column().length; i++) {
+                    self.column()[i].sortUp(0);
+                }
+                self.column()[q].sortUp(true);
+            } else {
+                self.listA.sort(function (a, b) {
+                    return b[q] - a[q];
+                });
+                for (var i = 0; i < self.column().length; i++) {
+                    self.column()[i].sortUp(0);
+                }
+                self.column()[q].sortUp(false);
+            }
+
+            self.listB(new MemModel(self.listA));
+            self.listA = [];
+        }
+        self.empty = function () {
+            self.listB([]);
+        }
 
         loadData();
         // Load data from remote
@@ -103,6 +136,7 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
             var self = this;
             self.text = data.text;
             self.fieldName = data.fieldname;
+            self.sortUp = ko.observable(0);
         }
         function MemModel(a) {
             return a;
