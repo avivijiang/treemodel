@@ -2,20 +2,27 @@
     "title": [
         {
             "text": "姓名",
-            "fieldname": "name"
+            "fieldname": "name",
+            "sort":false
         },
         {
             "text": "编号",
-            "fieldname": "Id"
+            "fieldname": "Id",
+            "sort":true
         },
         {
             "text": "上级编号",
-            "fieldname": "superId"
+            "fieldname": "superId",
+            "sort":true
         },
         {
             "text": "备注",
-            "fieldname": "remarks"
+            "fieldname": "remarks",
+            "sort":false
         }
+    ],
+    "chosenSize":[
+        10,25,50
     ],
     "pageIndex": 5,
     "pageSize": 5,
