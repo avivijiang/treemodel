@@ -1,18 +1,29 @@
+<label style="width:100%">
+    <div style="float:left">
+        <span>
+            show
+            <select data-bind="options:chosenSize,value:chosenS,event:{change:setSize}"></select>
+            entries
+        </span>
+    </div>
+    <div style="float:right">
+    <span class="glyphicon glyphicon-search" data-bind="click:search"></span>
+       <input style="border-radius:4px" data-bind="textInput:searchM">
+    </div>
+</label>
 <table style="border:1px #dee1e2 solid;" class="table table-striped">
     <thead>
         <tr data-bind="foreach:column">
             <th>
-                <!-- ko text:$index -->
-                <!-- /ko -->
                 <!-- ko text:text -->
                 <!-- /ko -->
-                <button data-bind="click:$parent.sort">
+                <button class="btn btn-default btn-xs" data-bind="visible:sort,click:$parent.sort">
                 <span class="glyphicon" data-bind="css:{'glyphicon-sort':sortUp()===0,'glyphicon-sort-by-attributes':sortUp()===true,'glyphicon-sort-by-attributes-alt':sortUp()===false}"></span>
                 </button>
             </th>
         </tr>
     </thead>
-    <tbody data-bind="foreach:listB">
+    <tbody data-bind="foreach:showList">
         <tr data-bind="foreach:$data">
             <td data-bind="text:$data"></td>
         </tr>
@@ -45,5 +56,4 @@
         <input class="form-control" style="display:inline;width:50px;height:30px;" data-bind="textInput:goPage">页</span>
 <span style="padding-left:20px">共<span data-bind="text:pageNum()"></span>页</span-->
 </div>
-<button class="btn btn-success btn-sm" data-bind="click:empty">empty</button>
 </label>
