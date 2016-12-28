@@ -187,7 +187,8 @@ define(['knockout', 'text!./table.html', 'jquery'], function (ko, templateMarkup
             self.fieldName = a;
             self.value = b;
         }
-
+ 
+ 
 
 
 
