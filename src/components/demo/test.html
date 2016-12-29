@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .abc{width:50%;height:200px;}
+        @media screen and (min-width:900px) and (max-width:800px){
+            .test {
+                background: green;
+            }
+        }
+        /*宽度小于500px时 绿色*/
+        
+        @media screen and (min-width:800px) {
+            .test {
+                background: red;
+            }
+        }
+        /*宽度大于800px时 红色*/
+        
+    </style>
+</head>
+
+<body>
+    <div class="test abc"></div>
+</body>
+
+</html>
