@@ -1,0 +1,173 @@
+[
+    {
+        "menu": {
+            "name": "系统管理",
+            "url": "#overview/homePage",
+            "icon": "img/icon/000.png",
+            "sub_menu": [
+                {
+                    "name": "系统总览",
+                    "url": "#overview/homePage",
+                    "icon": "/static/images/systemMa.png"
+                },
+                {
+                    "name": "节点管理",
+                    "url": "#node/list",
+                    "icon": "/static/images/node.png",
+                    "sub_menu": [
+                        {
+                            "name": "增加节点",
+                            "url": "#node/add",
+                            "icon": "img/icon/default.png"
+                        },
+                        {
+                            "name": "安装中间件",
+                            "url": "#plug/add",
+                            "icon": "img/icon/default.png"
+                        },
+                        {
+                            "name": "命令下发",
+                            "url": "#command/add",
+                            "icon": "img/icon/default.png"
+                        },
+                        {
+                            "name": "配置管理",
+                            "url": "#management/list",
+                            "icon": "img/icon/default.png"
+                        },
+                        {
+                            "name": "集群管理",
+                            "url": "#group/list",
+                            "icon": "img/icon/default.png"
+                        }
+                    ]
+                },
+                {
+                    "name": "发布管理",
+                    "url": "9080/jenkins",
+                    "icon": "/static/images/releaseManage.png"
+                },
+                {
+                    "name": "容器管理",
+                    "url": "#marathon/init",
+                    "outer_url": "http://172.20.15.89:8080/",
+                    "outer_url2": "http://172.20.15.89:5050/",
+                    "icon": "",
+                    "sub_menu": [
+                        {
+                            "name": "镜像仓库",
+                            "url": "#registry/init",
+                            "outer_url": "http://10.1.242.49:5000/",
+                            "icon": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "系统监控",
+                    "url": "81/ganglia",
+                    "icon": "/static/images/sysMonitor.png",
+                    "sub_menu": [
+                        {
+                            "name": "系统预警",
+                            "url": "81/nagios",
+                            "icon": ""
+                        },
+                        {
+                            "name": "预警配置",
+                            "url": "81/nagiosQL",
+                            "icon": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "日志管理",
+                    "url": "5601",
+                    "icon": "/static/images/log.png",
+                    "sub_menu": [
+                        {
+                            "name": "业务监控总览",
+                            "url": "5601/#/dashboard/Business_Monitor_Overview_Dashboard",
+                            "icon": ""
+                        },
+                        {
+                            "name": "实时响应时间",
+                            "url": "5601/#/dashboard/Real_Time_Response_Time_Dashboard",
+                            "icon": ""
+                        },
+                        {
+                            "name": "实时流量",
+                            "url": "5601/#/dashboard/Real_Time_Traffic_Dashboard",
+                            "icon": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "性能监控",
+                    "url": "8280",
+                    "icon": "/static/images/sysMonitor.png",
+                    "sub_menu": [
+                        {
+                            "name": "端到端报告",
+                            "url": "8280/oneTransaction/userActionList.pinpoint",
+                            "icon": ""
+                        },
+                        {
+                            "name": "应用服务分析",
+                            "url": "5601/#/dashboard/业务分析",
+                            "icon": ""
+                        },
+                        {
+                            "name": "浏览器性能分析",
+                            "url": "5601/#/dashboard/浏览器性能分析2",
+                            "icon": ""
+                        },
+                        {
+                            "name": "用户行为分析",
+                            "url": "5601/#/dashboard/用户行为分析",
+                            "icon": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "在线帮助",
+                    "url": "http://iuap.yonyou.com/webpage/developer/ieop/doc/em/em_index.html",
+                    "icon": "/static/images/quote.png"
+                }
+            ]
+        }
+    },
+    {
+        "menu": {
+            "name": "扩展菜单",
+            "url": "#",
+            "icon": "img/icon/default.png",
+            "sub_menu": [
+                {
+                    "name": "Dubbo服务治理",
+                    "url": "http://ip_addr:9192/",
+                    "icon": "/static/images/service.png"
+                },
+                {
+                    "name": "RabbitMQ监控",
+                    "url": "http://ip_addr:81/rabbit_mq",
+                    "icon": "/static/images/rabbitMQ.png"
+                },
+                {
+                    "name": "ElasticSearch监控",
+                    "url": "http://ip_addr:9200/_plugin/head/",
+                    "icon": "/static/images/elasticsearch.png"
+                },
+                {
+                    "name": "Solr监控",
+                    "url": "http://ip_addr:81/solr",
+                    "icon": "/static/images/solr.png"
+                },
+                {
+                    "name": "Quartz 监控",
+                    "url": "http://ip_addr:81/web_quartz/#/quartz/quartzlist",
+                    "icon": "/static/images/quartz.png"
+                }
+            ]
+        }
+    }
+]

@@ -7,6 +7,7 @@ define(['jquery', 'knockout', './router', 'bootstrap', 'knockout-projections', '
 
   // Components can be packaged as AMD modules, such as the following:
   ko.components.register('m-table', { require: 'components/table/table' });
+  ko.components.register('m-menu', { require: 'components/menu/menu' });
   Vue.component('m-vue', { require: 'components/vuedemo/vuedemo' });
   // Start the application
   ko.applyBindings({ route: router.currentRoute });
